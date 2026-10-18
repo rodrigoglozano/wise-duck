@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}Log In{% endblock %}
+
+{% block body_class %}auth-page{% endblock %}
+
+{% block body %}
+    <div class="auth-card">
+        <img src="static/duck_blink.gif" alt="Wise Duck" class="animation_login">
+        <h1>Log In</h1>
+
+        {% if error %}
+            <div class="banner">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="{{ email }}">
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password">
+
+            <button type="submit">Log In</button>
+        </form>
+
+        <p class="switch-link">Don't have an account? <a href="/register">Register</a></p>
+    </div>
+
+{% endblock %}
+

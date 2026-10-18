@@ -1,0 +1,318 @@
+/* Light theme is the default; dark theme kicks in automatically when the
+   OS/browser prefers it — no theme-toggle JavaScript needed. */
+:root {
+    --bg: #ffffff;
+    --text: #1d1d1d;
+    --chat-student-bg: #ffffff;
+    --chat-student-border: #9abced;
+    --chat-ai-bg: #f7f7f7;
+    --chat-ai-border: #e0b63f;
+    --divider: #e0e0e0;
+    --muted: #666666;
+    --button-bg: transparent;
+    --button-border: #999999;
+    --banner-bg: #fff4e5;
+    --banner-text: #7a4b00;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #1d1d1d;
+        --text: #f0f0f0;
+        --chat-student-bg: rgba(52, 53, 64, 0.7);
+        --chat-student-border: #d2e3fc;
+        --chat-ai-bg: rgba(68, 70, 83, 1);
+        --chat-ai-border: #ffd45a;
+        --divider: #333333;
+        --muted: #aaaaaa;
+        --button-bg: transparent;
+        --button-border: #666666;
+        --banner-bg: #3a2f1a;
+        --banner-text: #ffd45a;
+    }
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Header: title on the left, nav links on the right. */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--divider);
+}
+
+header h1 {
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-text {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.footer-text a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.animation_login {
+    display: block;
+    margin: 0 auto 10px auto;
+    width: 120px;
+    height: auto;
+}
+
+.animation_chat {
+    width: 40px;
+    height: auto;
+}
+
+.nav-links a {
+    margin-left: 12px;
+    color: inherit;
+    text-decoration: none;
+    border: 1px solid var(--button-border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+}
+
+.nav-links a:hover {
+    background: var(--chat-ai-bg);
+}
+
+/* Scrollable chat transcript, grows to fill the space between the header
+   and the input bar at the bottom. */
+#chat {
+    display: flex;
+    flex-direction: column-reverse;
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 20px;
+}
+
+.chat-bubble {
+    border-left: 3px solid;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.chat-bubble.student {
+    background: var(--chat-student-bg);
+    border-left-color: var(--chat-student-border);
+}
+
+.chat-bubble.ai {
+    background: var(--chat-ai-bg);
+    border-left-color: var(--chat-ai-border);
+}
+
+.chat-bubble.thinking .chat-message {
+    animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+.chat-author {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.chat-message {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Validation/error/cap messages (e.g. "pick a module", "limit reached")
+   render as a small banner instead of a chat bubble, since they're not
+   part of the actual conversation. */
+.banner {
+    margin: 0 20px 10px 20px;
+    padding: 10px 14px;
+    border-radius: 4px;
+    background: var(--banner-bg);
+    color: var(--banner-text);
+}
+
+/* Module picker: shown as a row of pill-style radio labels only until a
+   module gets locked in for the session. */
+.module-picker {
+    padding: 10px 20px 0 20px;
+}
+
+.module-picker p {
+    margin: 0 0 8px 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.module-picker label {
+    display: inline-block;
+    border: 1px solid var(--button-border);
+    border-radius: 999px;
+    padding: 4px 12px;
+    margin-right: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.module-picker input[type="radio"] {
+    margin-right: 4px;
+}
+
+/* Input bar pinned to the bottom: textarea + send button side by side. */
+#input-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 10px 20px 20px 20px;
+    border-top: 1px solid var(--divider);
+}
+
+#input-bar textarea {
+    flex: 1;
+    resize: none;
+    background: transparent;
+    color: inherit;
+    border: 1px solid var(--divider);
+    border-radius: 6px;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+#input-bar textarea:focus {
+    outline: none;
+    border-color: var(--chat-student-border);
+}
+
+#send-btn {
+    background: var(--button-bg);
+    border: 1px solid var(--button-border);
+    border-radius: 6px;
+    color: inherit;
+    cursor: pointer;
+    padding: 10px 16px;
+    font-size: 1rem;
+}
+
+#send-btn:hover {
+    background: var(--chat-ai-bg);
+}
+
+/* Login/register pages: a centered card instead of the full-height chat
+   layout above, but sharing the same colors/fonts so it feels like one
+   app rather than two different pages bolted together. */
+.auth-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 360px;
+    padding: 30px;
+}
+
+.auth-card h1 {
+    text-align: center;
+    margin: 0 0 20px 0;
+    font-size: 1.4rem;
+}
+
+.auth-card label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.auth-card input {
+    width: 100%;
+    box-sizing: border-box;
+    background: transparent;
+    color: inherit;
+    border: 1px solid var(--divider);
+    border-radius: 6px;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 1rem;
+    margin-bottom: 16px;
+}
+
+.auth-card input:focus {
+    outline: none;
+    border-color: var(--chat-student-border);
+}
+
+.auth-card button {
+    width: 100%;
+    background: var(--button-bg);
+    border: 1px solid var(--button-border);
+    border-radius: 6px;
+    color: inherit;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 16px;
+}
+
+.auth-card button:hover {
+    background: var(--chat-ai-bg);
+}
+
+.auth-card .switch-link {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.auth-card .switch-link a {
+    color: inherit;
+}
+
+.credits{
+    width: 100%;
+    max-width: 500px;
+    max-height: auto;
+    text-align: left;
+    font-size: 0.9rem;
+    color: var(--muted); 
+}
+
+/* The .banner rule above is tuned for the chat page's 20px side gutters;
+   inside the auth card (which already has its own padding) it should
+   just stack above the form with no extra side margins. */
+.auth-card .banner {
+    margin: 0 0 16px 0;
+}

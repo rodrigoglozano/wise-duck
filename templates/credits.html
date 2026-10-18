@@ -1,0 +1,26 @@
+{# AI usage disclosure: Claude Code (Anthropic) was used to speed up #}
+{# implementation and go through multiple design/styling iterations. #}
+{# The page layout and design choices are my own. #}
+{% extends "layout.html" %}
+
+{% block title %}Credits{% endblock %}
+
+{% block body_class %}auth-page{% endblock %}
+
+{% block body %}
+<div class="auth-card">
+    <img src="static/duck_blink.gif" alt="Wise Duck" class="animation_login">
+    <h1>Credits</h1>
+
+    <p class="credits">
+        <br> Professor David Malan and CS50 Staff
+        <br> The Duck GIF is from <a href="https://itch.io/profile/skagon-gamer">Skagon Gamer</a>
+        <br> Claude for assisting with the AI integration, styling and overall project guidance
+        <br>
+        <br> Created by Rodrigo Lozano for CS50x Final Project, 2026
+        <br> Creative Commons
+    </p>
+</div>
+{% endblock %}
+
+{% block footer %}<a href="{{ url_for('login') }}">Go back to login</a>{% endblock %}

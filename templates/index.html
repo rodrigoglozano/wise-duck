@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block title %}Index{% endblock %}
+
+{% block sauce %}
+    {% if awaiting_reply %}
+        <!-- Plain-HTML equivalent of "poll for the reply": no JavaScript,
+             just a second page load a moment after this one renders. -->
+        <meta http-equiv="refresh" content="0.5;url=/respond">
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <header>
+        <div class="brand">
+            <img src="{{ url_for('static', filename='duck_walk.gif') if awaiting_reply else url_for('static', filename='duck_blink.gif') }}" alt="Wise Duck" class="animation_chat">
+            <h1>Wise Duck</h1>
+        </div>
+        <nav class="nav-links">
+            <a href="/new">Start a new quiz</a>
+            <a href="/logout">Log out</a>
+        </nav>
+    </header>
+
+    <div id="chat">
+        {% if awaiting_reply %}
+            <div class="chat-bubble ai thinking">
+                <span class="chat-author">Duck</span>
+                <p class="chat-message">Thinking…</p>
+            </div>
+        {% endif %}
+
+        {% for entry in history|reverse %}
+            {% if entry.sent_by == "student" %}
+                <div class="chat-bubble student">
+                    <span class="chat-author">You</span>
+                    <p class="chat-message">{{ entry.message }}</p>
+                </div>
+            {% else %}
+                <div class="chat-bubble ai">
+                    <span class="chat-author">Duck</span>
+                    <p class="chat-message">{{ entry.message }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    {% if response %}
+        <div class="banner">{{ response }}</div>
+    {% endif %}
+
+    {% if not awaiting_reply %}
+        <form method="POST">
+            {% if not module_locked %}
+                <div class="module-picker">
+                    <p>Pick a module to submit your question to:</p>
+                    <input type="radio" name="module" value="module1" id="module1">
+                    <label for="module1">Module 1</label>
+                    <input type="radio" name="module" value="module2" id="module2">
+                    <label for="module2">Module 2</label>
+                    <input type="radio" name="module" value="module3" id="module3">
+                    <label for="module3">Module 3</label>
+                    <button type="submit">Continue</button>
+                </div>
+                
+            {% elif not topic_locked %}
+                <div class="module-picker">
+                    <p>Pick a topic within this module:</p>
+                    {% for key, label in topics.items() %}
+                        <input type="radio" name="topic" value="{{ key }}" id="topic{{ key }}" title="{{ label }}">
+                        <label for="topic{{ key }}" title="{{ label }}">Punto {{ key }} — {{ label }}</label>
+                    {% endfor %}
+                </div>
+
+                <div id="input-bar">
+                    <textarea id="question" name="question" rows="1" maxlength="2000" placeholder="Ask a question">{{ question }}</textarea>
+                    <button id="send-btn" type="submit" title="Send">➤</button>
+                </div>
+            {% else %}
+                <div id="input-bar">
+                    <textarea id="question" name="question" rows="1" maxlength="2000" placeholder="Ask a question">{{ question }}</textarea>
+                    <button id="send-btn" type="submit" title="Send">➤</button>
+                </div>
+            {% endif %}
+        </form>
+    {% endif %}
+{% endblock %}

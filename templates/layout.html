@@ -1,0 +1,24 @@
+{# AI usage disclosure (applies to every template that extends this one: #}
+{# index.html, login.html, register.html, registration_success.html): #}
+{# Claude Code (Anthropic) was used to speed up implementation and go #}
+{# through multiple design/styling iterations, including the Jinja logic #}
+{# that swaps the duck GIF based on app state (e.g. awaiting_reply). The #}
+{# page layout and design choices are my own. #}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+        <title>{% block title %}{% endblock%} — Wise Duck</title>
+        {% block sauce %}{% endblock %}
+    </head>
+    <body class="{% block body_class %}{% endblock %}">
+
+        {% block body %} {% endblock %}
+
+        <footer>
+            <p class="footer-text">{% block footer %}<a href="{{ url_for('credits') }}">Credits</a>{% endblock %}</p>
+        </footer>
+    </body>
+</html>
