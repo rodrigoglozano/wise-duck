@@ -2,6 +2,7 @@
 __pycache__/
 *.pyc
 project.db
+content/
 content_real_backup/
 final_project_spec.md
 .DS_Store
