@@ -1,6 +1,6 @@
 # Wise Duck 🦆
 
-#### Video Demo: [LINK AL VIDEO]
+#### Video Demo: https://youtu.be/ce24VioyRmA
 
 #### Description:
 
