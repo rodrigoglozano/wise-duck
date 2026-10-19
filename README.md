@@ -71,10 +71,13 @@ again, that one function needs to change.
   `<letter> - <label>.md` (e.g. `A - ... .md`). This naming convention
   is what `discover_content()` parses to build the module/topic pickers
   automatically, so anyone attempting to use their own files needs to
-  respect this convention. **Note:** the actual course material I used
-  while developing isn't mine to redistribute, so the files submitted
-  here are placeholder sample topics with the same structure, only so
-  the app can be run and graded end to end — `discover_content()` and
+  respect this convention. **Note:** the real material I teach with
+  isn't fully mine to redistribute, and separately, as the instructor,
+  I don't want excerpts of it circulating as a substitute for the
+  actual source material students should be studying from — both
+  reasons apply at once. So the files submitted here are placeholder
+  sample topics with the same structure, only so the app can be run
+  and graded end to end — `discover_content()` and
   `load_module_section()` work identically regardless of which content
   is dropped into these folders.
 - `templates/layout.html` — the base template every other page extends,
@@ -108,15 +111,13 @@ again, that one function needs to change.
 - `requirements.txt` — the project's Python dependencies (`flask`,
   `groq`, `python-dotenv`, `werkzeug`), so the app can be set up with a
   single `pip install -r requirements.txt`.
-- `.env` — holds `GROQ_API_KEY`; excluded from version control via
-  `.gitignore` and never sent to the client.
+- `.env` — holds `GROQ_API_KEY` and `FLASK_SECRET_KEY`; excluded from
+  version control via `.gitignore` and never sent to the client.
 
 ### Design choices
 
-- **Modules must be uploaded to the content folder for this to work.**
-  Unfortunately the material I used to test cannot be submitted since that
-  would make my own teaching notes available, which could potentially encourage
-  studying from them instead of the source material.
+- **Sample content instead of the real material.** See the
+  `content/module{1,2,3}/` entry under "File structure" above for why.
 - **Topic-level, not module-level, content loading.** Only the selected
   topic's single markdown file is sent to the AI per question, not the
   whole module and never all three modules — this keeps every request
@@ -135,9 +136,15 @@ again, that one function needs to change.
 
 ### How to run it locally
 
+This app calls Groq's API, so running it live needs a Groq API key —
+free at [console.groq.com](https://console.groq.com) (sign-up takes a
+minute, no credit card). I'm not including my own key in this
+submission, since API keys shouldn't be shared even privately.
+
 ```
 pip install -r requirements.txt
-echo "GROQ_API_KEY=your-key-here" > .env
+echo "GROQ_API_KEY=your-key-here" >> .env
+echo "FLASK_SECRET_KEY=$(python3 -c 'import secrets; print(secrets.token_hex(32))')" >> .env
 python3 app.py
 ```
 
